@@ -11,7 +11,7 @@
     "Other"
   ],
   "activationEvents": [
-		"*"
+    "*"
   ],
   "main": "./out/extension",
   "contributes": {
@@ -25,18 +25,40 @@
       ]
     },
     "views": {
-      "gitlabNotice": [{
-        "id": "gitlabCI",
-        "name": "Gitlab CI/CD"
-      }, {
-        "id": "gitlabMR",
-        "name": "Gitlab MR"
-      }]
+      "gitlabNotice": [
+        {
+          "id": "gitlabCI",
+          "name": "Gitlab CI/CD"
+        },
+        {
+          "id": "gitlabMR",
+          "name": "Gitlab MR"
+        }
+      ]
     },
-    "commands": [{
-      "command": "extension.sayHello",
-      "title": "Hello World"
-    }]
+    "menus": {
+      "view/title": [
+        {
+          "command": "gitlabNotice.ci.refresh",
+          "when": "view === gitlabCI",
+          "group": "navigation"
+        }
+      ]
+    },
+    "commands": [
+      {}
+    ],
+    "configuration": [
+      {
+        "title": "Gitlab Config",
+        "properties": {
+          "gitlabNotice.gitlabUrl": {
+            "type": "string",
+            "default": ""
+          }
+        }
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -51,5 +73,8 @@
     "tslint": "^5.8.0",
     "@types/node": "^8.10.25",
     "@types/mocha": "^2.2.42"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
   }
 }
