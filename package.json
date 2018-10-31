@@ -40,13 +40,19 @@
       "view/title": [
         {
           "command": "gitlabNotice.ci.refresh",
-          "when": "view === gitlabCI",
           "group": "navigation"
         }
       ]
     },
     "commands": [
-      {}
+      {
+        "command": "gitlabNotice.ci.refresh",
+        "title": "Refresh",
+        "icon": {
+          "dark": "media/dark/refresh.svg",
+          "light": "media/light/refresh.svg"          
+        }
+      }
     ],
     "configuration": [
       {

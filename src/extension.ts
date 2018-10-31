@@ -7,23 +7,19 @@ import {GitlabCIProvider} from './views/ci-provider'
 // your extension is activated the very first time the command is executed
 export function activate(context: ExtensionContext) {
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    // let disposable = commands.registerCommand('extension.sayHello', () => {
-    //     // The code you place here will be executed every time your command is executed
-
-    //     // Display a message box to the user
-    //     window.showInformationMessage('Hello World!');
-    // });
-
-
     if(checkConfReady()){
       const ciProvider = new GitlabCIProvider(workspace.rootPath)
       window.registerTreeDataProvider('gitlabCI', ciProvider)
       commands.registerCommand('gitlabCI.selectPipeline', (item:TreeItem)=>{
         console.log(item.label)
       })
+      commands.registerCommand('gitlabNotice.ci.refresh', ()=> {
+        ciProvider.refresh()
+      })
+
+      setInterval(()=>{
+        ciProvider.refresh()
+      }, 5000)
 
     }else {
       window.showInformationMessage('请配置gitlab地址【gitlabNotice.gitlabUrl】');

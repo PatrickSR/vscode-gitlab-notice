@@ -21,7 +21,10 @@ export class GitlabCIProvider implements TreeDataProvider<TreeItem> {
 
   }
 
-  private updateTreeview(){
+  /**
+   * 刷新CI/CD最新状态
+   */
+  public refresh() {
     this._onDidChangeTreeData.fire()
   }
 
@@ -106,7 +109,8 @@ export class GitlabCIProvider implements TreeDataProvider<TreeItem> {
         const startTime = new TreeItem(`触发时间： ${data.started_at}`)
         const endTime = new TreeItem(`结束时间： ${data.finished_at}`)
         const duration = new TreeItem(`时长： ${data.duration}秒`)
-        pipelineDetail.push(user, startTime, endTime, duration)
+        const weburl = new TreeItem(`Web_url：${data.web_url || ''}`)
+        pipelineDetail.push(user, startTime, endTime, duration, weburl)
         resolve(pipelineDetail)
       } catch (error) {
         console.error(error)
