@@ -16,6 +16,34 @@ export function activate(context: ExtensionContext) {
       commands.registerCommand('gitlabNotice.ci.refresh', ()=> {
         ciProvider.refresh()
       })
+      commands.registerCommand('gitlabNotice.ci.retry', async (pipeline) => {
+        try {
+          /**
+           * 获取项目id 
+           * pipeline.contextValue 结构可查看ci-provider.ts
+           */
+          const projectID = pipeline.contextValue.split('_')[1]
+          await ciProvider.retry(projectID, pipeline.id)
+          
+          window.showInformationMessage(`流水线 #${pipeline.id} 进行中...`)
+        } catch (error) {
+          console.error(error)
+        }
+      })
+      commands.registerCommand('gitlabNotice.ci.cancel', async (pipeline) => {
+        try {
+          /**
+           * 获取项目id 
+           * pipeline.contextValue 结构可查看ci-provider.ts
+           */
+          const projectID = pipeline.contextValue.split('_')[1]
+          await ciProvider.cancel(projectID, pipeline.id)
+
+          window.showInformationMessage(`流水线 #${pipeline.id} 停止中...`)
+        } catch (error) {
+          console.error(error)
+        }
+      })
 
       setInterval(()=>{
         ciProvider.refresh()

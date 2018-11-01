@@ -39,5 +39,21 @@ export class Fetch {
     return this.axios.get(`/api/v4/projects/${projectID}/pipelines/${pipelineID}`)
   }
 
-  
+  /**
+   * 重新启动选中pipeline的任务
+   * @param projectID 项目id
+   * @param pipelineID pipeline id
+   */
+  public retryPipelineJob (projectID: string | number, pipelineID: string | number) {
+    return this.axios.post(`/api/v4/projects/${projectID}/pipelines/${pipelineID}/retry`)
+  }
+
+  /**
+   * 取消选中pipeline的任务
+   * @param projectID 
+   * @param pipelineID 
+   */
+  public cancelPipelineJob (projectID: string | number, pipelineID: string | number) {
+    return this.axios.post(`/api/v4/projects/${projectID}/pipelines/${pipelineID}/cancel`)
+  }
 } 

@@ -27,6 +27,38 @@ export class GitlabCIProvider implements TreeDataProvider<TreeItem> {
   public refresh() {
     this._onDidChangeTreeData.fire()
   }
+  
+  /**
+   * 重新启动pipeline任务
+   * @param projectID 项目id
+   * @param pipelineID pipeline id
+   */
+  public retry(projectID: string | number, pipelineID: string | number) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const retryResp = await this.retryPipelineJob(projectID, pipelineID)
+        resolve(retryResp)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+  
+  /**
+   * 取消pipeline任务
+   * @param projectID 项目id
+   * @param pipelineID pipeline id
+   */
+  public cancel(projectID: string | number, pipelineID: string | number) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const retryResp = await this.cancelPipelineJob(projectID, pipelineID)
+        resolve(retryResp)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
 
   getTreeItem(element: TreeItem): TreeItem {
     return element
@@ -116,5 +148,21 @@ export class GitlabCIProvider implements TreeDataProvider<TreeItem> {
         console.error(error)
       }
     })
+  }
+
+  /**
+   * @param projectID
+   * @param pipelineID
+   */
+  private retryPipelineJob (projectID: string | number, pipelineID: string | number) {
+    return this.fetch.retryPipelineJob(projectID, pipelineID)
+  }
+
+  /**
+   * @param projectID
+   * @param pipelineID
+   */
+  private cancelPipelineJob (projectID: string | number, pipelineID: string | number) {
+    return this.fetch.cancelPipelineJob(projectID, pipelineID)
   }
 }

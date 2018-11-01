@@ -42,6 +42,18 @@
           "command": "gitlabNotice.ci.refresh",
           "group": "navigation"
         }
+      ],
+      "view/item/context": [
+        {
+          "command": "gitlabNotice.ci.retry",
+          "when": "viewItem =~ /^pipeline/",
+          "group": "gitlabNoticeCI@1"
+        },
+        {
+          "command": "gitlabNotice.ci.cancel",
+          "when": "viewItem =~ /^pipeline/",
+          "group": "gitlabNoticeCI@2"
+        }
       ]
     },
     "commands": [
@@ -50,8 +62,16 @@
         "title": "Refresh",
         "icon": {
           "dark": "media/dark/refresh.svg",
-          "light": "media/light/refresh.svg"          
+          "light": "media/light/refresh.svg"
         }
+      },
+      {
+        "command": "gitlabNotice.ci.retry",
+        "title": "Retry Job"
+      },
+      {
+        "command": "gitlabNotice.ci.cancel",
+        "title": "Cancel Job"
       }
     ],
     "configuration": [
