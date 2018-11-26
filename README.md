@@ -1,66 +1,55 @@
-# gitlab-notice README
+# gitlab-notice
 
-This is the README for your extension "gitlab-notice". After writing up a brief description, we recommend including the following sections.
+## 背景
+程序员在日常开发中，对每个需求用代码把功能实现外，更重要的是对代码的管理。
 
-## Features
+开发完成后除了提交自己码好的代码外，还要把代码提交合并，并且在gitlab上部署好的 CI/CD 中查看构建情况。这时出现的情景就是需要在浏览器中重新打开gitlab定位到当前开发的仓库进行操作。当出现同时操作几个仓库的时候就会觉得比较崩溃了。所以gitlab-notice插件就是为了方便管理gitlab，做到不需要离开VSCode也能对仓库进行操作。
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## 注册视图容器和创建视图
+插件如果想在出现在侧边栏出现并进行操作，则必须注册视图容器并且创建视图
 
-For example if there is an image subfolder under your extension project workspace:
+视图容器就是插件的视图化管理入口，如图：
 
-\!\[feature X\]\(images/feature-x.png\)
+![GitLab Notice](media/readme/views-containers.jpg)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+如果想在编辑器中操作，就需要创建视图。注册视图容器并创建单个或多个视图，只需要打开 `package.json` ，设置：
 
-## Requirements
+```json
+{
+  "name": "插件名称",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "用于标识容器的唯一ID",
+          "title": "容器名称",
+          "icon": "容器图标路径"
+        }
+      ]
+    },
+    "views": {
+      "注册视图容器的ID": [
+        {
+          "id": "视图1的标识符",
+          "name": "可读的视图1名称。将会被显示"
+        },
+        ...
+      ]
+    }
+  }
+}
+```
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### 实现获取 Gitlab 仓库列表
 
-## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
 
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
+总体的实现流程是：
 
 ### For more information
 
 * [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
 * [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-* [VScode中文文档](https://jeasonstudio.gitbooks.io/vscode-cn-doc/content/md/%E6%89%A9%E5%B1%95API/%E6%89%A9%E5%B1%95%E7%82%B9.html)
+* [VSCode中文文档](https://jeasonstudio.gitbooks.io/vscode-cn-doc/content/md/%E6%89%A9%E5%B1%95API/%E6%89%A9%E5%B1%95%E7%82%B9.html)
 
 **Enjoy!**
